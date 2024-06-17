@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex 布局</title>
+    <meta name="description" content="Flex布局演示。" />
+    
+    <style>
+        body{
+            margin:0;
+            height:100vh;
+            background-color: #eee;
+        }
+        /* *{
+            border: 1px solid black;
+        } */
+        .yinying{
+           box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+        .flex{
+            display: flex;
+        }
+        .baise{
+            background-color: white;
+        }
+        .flex1{
+            flex: 1;
+        }
+        .column{
+            flex-direction: column;
+        }
+        .mg8{
+            margin: 8px;
+        }
+        .mgr8{
+            margin-right: 8px;
+        }
+        .mgt8{
+            margin-top: 8px;
+        }
+        .daohang{
+            padding: 10px 20px;
+            border-bottom: 2px solid rgb(204, 204, 204);
+            font-size: 16px;
+            color:#666
+        }
+        /* 当屏幕宽度宽度小于 600 像素，则1.隐藏侧边栏2.内容区竖向排列3.数据区竖向排列 4.数据块上下0，左右8px 
+        5.flex:auto利用剩余空间，各自的尺寸按照各自内容进行分配（多用于内容动态适配） */
+        @media (max-width: 600px) {
+            .cebian {
+                display:none;
+            }
+            .neirong{
+                flex-direction: column;
+            }
+            .shujuqu{
+                flex-direction: column;
+            }
+            .youqu{
+                margin-left: 8px;
+            }
+            .shuju{
+                margin:0 8px;
+                flex: auto;
+            }
+        }
+        /*隐藏滚动条 .neirong::-webkit-scrollbar{display:none;} */
+    </style>
+</head>
+<body class="flex">
+    <!-- 侧边栏 -->
+    <div style="width: 200px;z-index: 2;" class="baise yinying cebian">
+        <!-- 头像栏 -->
+        <div 
+            style="padding:5px; 
+            justify-content:center; align-items:center;
+            border-bottom: 1px solid gray;" 
+         class="flex"
+        >
+         
+        <!-- Lighthouse中只有最佳做法78分，其余均满分。
+        原因：用了第三方图像转为链接的平台 -->
+        <img 
+            src="https://pic.imgdb.cn/item/66695edcd9c307b7e97fb431.webp"
+            alt="头像" width="50px" height="50px" > 
+        <div style="margin-left: 10px;">昵称</div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="flex1">
+            <div style="height:30px;" class="daohang">导航</div>
+            <div style="height:30px;" class="daohang">导航</div>
+            <div style="height:30px;" class="daohang">导航</div>
+            <div style="height:30px;" class="daohang">导航</div>
+            <div style="height:30px;" class="daohang">导航</div>
+            <div style="height:30px;" class="daohang">导航</div>
+        </div>
+    </div>
+    <!-- 主区域 -->
+    <div class="flex flex1 column">
+        <!-- 头部栏 -->
+        <div style="height: 60px; z-index: 1;" class="baise yinying"></div>
+        <!-- 内容栏 -->
+        <div style="overflow:auto" class="flex flex1 neirong">
+            <!-- overflow:auto能让子项只在内容栏滚动；但这样会导致头部栏被压在下面，所以用z-index置于内容栏上层;
+                为了避免侧边栏被头部栏压着所以值2>1 -->
+            <!-- 左区 -->
+            <div style="flex: 3;" class="flex column mg8">
+                <!-- 数据区 -->
+                <div class="flex shujuqu">
+                    <!-- 数据块 -->
+                    <div style="height:100px;" class="shuju flex1 baise yinying mgr8">数据内容哦</div>
+                    <div style="height:100px;" class="shuju flex1 baise yinying mgr8">
+                        <h3 class="mg8">具体数据</h3>
+                        <p>123456789</p>      
+                    </div>
+                    <div style="height:100px;" class="shuju flex1 baise yinying mgr8"></div>
+                    <div style="height:100px;" class="shuju flex1 baise yinying "></div>
+                </div>
+                <!-- 列表区 -->
+                <div class="flex column">
+                    <!-- 列表项 -->
+                    <div style="height:170px;" class="baise yinying mgt8"></div>
+                    <div style="height:170px;" class="baise yinying mgt8">
+                        <p>某某区域<b>今年销售</b>人员</p>
+                    </div>
+                    <div style="height:170px;" class="baise yinying mgt8"></div>
+                    <div style="height:170px;" class="baise yinying mgt8"></div>
+                    <div style="height:170px;" class="baise yinying mgt8"></div>
+                </div> 
+            </div>
+            <!-- 右区 -->
+            <div style="flex: 1;" class="youqu column mgr8 mgt8">
+                <!-- 提示区 -->
+                <div style="height: 150px;" class="baise yinying">
+                    提示内容
+                </div>
+                <!-- 消息区 -->
+                <div style="height: 400px;" class="baise flex1 yinying mgt8 breakword">
+                    消息内容消息内容消息内容消息内容
+                    <p>未读数</p>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <!-- 若用户的浏览器支持Service Worker功能，当网页加载完成后，会加载sw.js文件，开启pwa功能 -->
+     <script>
+    if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+            navigator.serviceWorker.register("sw.js");
+            });
+        }
+    </script>
+</body>
+</html>
